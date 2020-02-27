@@ -3,7 +3,9 @@
 
 var Block = require("bs-platform/lib/js/block.js");
 var HList$ReasonmlConcepts = require("./gadt/HList.bs.js");
+var SafeList$ReasonmlConcepts = require("./gadt/SafeList.bs.js");
 var Primitive$ReasonmlConcepts = require("./gadt/Primitive.bs.js");
+var LengthList$ReasonmlConcepts = require("./gadt/LengthList.bs.js");
 
 console.log("Hello, BuckleScript and Reason!");
 
@@ -19,7 +21,7 @@ console.log(Primitive$ReasonmlConcepts.$$eval(/* Float */Block.__(2, [43.0234234
 
 console.log(Primitive$ReasonmlConcepts.$$eval(/* Bool */Block.__(3, [false])));
 
-console.log("1. HLIST");
+console.log("2. HLIST");
 
 console.log(/* :: */[/* tuple */[
         1,
@@ -43,7 +45,19 @@ console.log(/* :: */[/* tuple */[
                 false,
                 /* :: */[/* tuple */[
                     4.645,
-                    /* [] */0
+                    /* :: */[/* tuple */[
+                        /* :: */[/* tuple */[
+                            1,
+                            /* :: */[/* tuple */[
+                                2,
+                                /* :: */[/* tuple */[
+                                    4,
+                                    /* [] */0
+                                  ]]
+                              ]]
+                          ]],
+                        /* [] */0
+                      ]]
                   ]]
               ]]
           ]]
@@ -57,10 +71,72 @@ console.log(HList$ReasonmlConcepts.List.length(/* :: */[/* tuple */[
                     false,
                     /* :: */[/* tuple */[
                         4.645,
-                        /* [] */0
+                        /* :: */[/* tuple */[
+                            /* :: */[/* tuple */[
+                                1,
+                                /* :: */[/* tuple */[
+                                    2,
+                                    /* :: */[/* tuple */[
+                                        4,
+                                        /* [] */0
+                                      ]]
+                                  ]]
+                              ]],
+                            /* [] */0
+                          ]]
                       ]]
                   ]]
               ]]
           ]]));
+
+console.log("3. SAFELIST");
+
+console.log(SafeList$ReasonmlConcepts.length(/* :: */[/* tuple */[
+            1,
+            /* :: */[/* tuple */[
+                2,
+                /* :: */[/* tuple */[
+                    3,
+                    /* [] */0
+                  ]]
+              ]]
+          ]]));
+
+console.log(SafeList$ReasonmlConcepts.head(/* :: */[/* tuple */[
+            1,
+            /* :: */[/* tuple */[
+                2,
+                /* :: */[/* tuple */[
+                    3,
+                    /* [] */0
+                  ]]
+              ]]
+          ]]));
+
+console.log("4. LENGTHLIST");
+
+console.log(/* :: */[
+      1,
+      /* :: */[
+        2,
+        /* [] */0
+      ]
+    ]);
+
+console.log(LengthList$ReasonmlConcepts.push(/* :: */[
+          1,
+          /* :: */[
+            2,
+            /* [] */0
+          ]
+        ], 3));
+
+console.log(LengthList$ReasonmlConcepts.pop(LengthList$ReasonmlConcepts.pop(LengthList$ReasonmlConcepts.push(/* :: */[
+                  1,
+                  /* :: */[
+                    2,
+                    /* [] */0
+                  ]
+                ], 3))));
 
 /*  Not a pure module */
