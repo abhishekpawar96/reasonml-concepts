@@ -1,0 +1,19 @@
+{
+  "name": "reasonml-concepts",
+  "version": "0.1.0",
+  "main": "./src/Demo.bs.js",
+  "scripts": {
+    "build": "bsb -make-world",
+    "start": "bsb -make-world -w",
+    "clean": "bsb -clean-world",
+    "demo": "node src/Demo.bs.js "
+  },
+  "keywords": [
+    "BuckleScript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "bs-platform": "^7.1.1"
+  }
+}
