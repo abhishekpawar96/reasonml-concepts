@@ -10,6 +10,7 @@ type t('a) =
   | Float(float): t(float)
   | Bool(bool): t(bool);
 /*
+ 
  - We made `t` type polymorphic by specifying `'a`
  - When specify types for data constructors instead of giving `t('a)` to each type we gave them a more concrete type otherwise it would be same as a simple ADT.
  - incase of `Int(int)` we specified its type not as `t('a)` but rather `t(int)`, and similarly for rest of the data constructors. Thus we encoded extra information in our type.

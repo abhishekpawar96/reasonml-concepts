@@ -17,7 +17,7 @@ module List = {
 };
 
 /*
- - The type of `[]` is pretty straight forward,
+   - The type of `[]` is pretty straight forward,
    but in the type of `::` we hide the extra parameter `'a`, by specifying the type of `::` as simply `t`.
 
    - Here type `'a` acts as an existential type.
