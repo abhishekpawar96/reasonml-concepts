@@ -2,12 +2,155 @@
 'use strict';
 
 var Block = require("bs-platform/lib/js/block.js");
+var Js_exn = require("bs-platform/lib/js/js_exn.js");
+var Caml_array = require("bs-platform/lib/js/caml_array.js");
+var Caml_oo_curry = require("bs-platform/lib/js/caml_oo_curry.js");
+var CamlinternalOO = require("bs-platform/lib/js/camlinternalOO.js");
+var Caml_exceptions = require("bs-platform/lib/js/caml_exceptions.js");
+var Caml_js_exceptions = require("bs-platform/lib/js/caml_js_exceptions.js");
 var HList$ReasonmlConcepts = require("./gadt/HList.bs.js");
 var SafeList$ReasonmlConcepts = require("./gadt/SafeList.bs.js");
 var Primitive$ReasonmlConcepts = require("./gadt/Primitive.bs.js");
 var LengthList$ReasonmlConcepts = require("./gadt/LengthList.bs.js");
 
+var shared = ["color"];
+
 console.log("Hello, BuckleScript and Reason!");
+
+console.log("Records and Objects");
+
+var $$class = CamlinternalOO.create_table(shared);
+
+var ids = CamlinternalOO.new_methods_variables($$class, shared, ["red"]);
+
+var color = ids[0];
+
+var red = ids[1];
+
+CamlinternalOO.set_method($$class, color, (function (self$1) {
+        return self$1[red];
+      }));
+
+function obj_init(env) {
+  var self = CamlinternalOO.create_object_opt(0, $$class);
+  self[red] = "Red";
+  return self;
+}
+
+CamlinternalOO.init_class($$class);
+
+var obj = obj_init(0);
+
+var $$class$1 = CamlinternalOO.create_table(shared);
+
+var ids$1 = CamlinternalOO.new_methods_variables($$class$1, shared, ["blue"]);
+
+var color$1 = ids$1[0];
+
+var blue = ids$1[1];
+
+CamlinternalOO.set_method($$class$1, color$1, (function (self$2) {
+        return self$2[blue];
+      }));
+
+function obj_init$1(env) {
+  var self = CamlinternalOO.create_object_opt(0, $$class$1);
+  self[blue] = "Blue";
+  return self;
+}
+
+CamlinternalOO.init_class($$class$1);
+
+var obj2 = obj_init$1(0);
+
+function getAge(entity) {
+  return entity.age;
+}
+
+function getObj(entity) {
+  return Caml_oo_curry.js1(-899911325, 1, entity);
+}
+
+console.log(getObj(obj));
+
+var personObj = {
+  name: "blue"
+};
+
+console.log(personObj.name);
+
+var myPerson = { };
+
+myPerson["name"] = "BLUE";
+
+console.log(myPerson);
+
+var make = {
+  foo: "Test",
+  bar: 1
+};
+
+var MyException = Caml_exceptions.create("Demo-ReasonmlConcepts.MyException");
+
+function unsafeMethod(param) {
+  throw [
+        MyException,
+        "some message"
+      ];
+}
+
+var exit = 0;
+
+var s;
+
+try {
+  s = Caml_array.caml_array_get([], 0);
+  exit = 1;
+}
+catch (raw_e){
+  var e = Caml_js_exceptions.internalToOCamlException(raw_e);
+  console.log(e);
+}
+
+if (exit === 1) {
+  console.log(s);
+}
+
+var exit$1 = 0;
+
+var s$1;
+
+try {
+  throw [
+        MyException,
+        "some message"
+      ];
+}
+catch (raw_e$1){
+  var e$1 = Caml_js_exceptions.internalToOCamlException(raw_e$1);
+  console.log(e$1);
+}
+
+if (exit$1 === 1) {
+  console.log("safe: ", s$1);
+}
+
+try {
+  Js_exn.raiseError("oops!");
+}
+catch (raw_exn){
+  var exn = Caml_js_exceptions.internalToOCamlException(raw_exn);
+  if (exn[0] === Js_exn.$$Error) {
+    var match = exn[1].message;
+    if (match !== undefined) {
+      console.log("Error: " + (String(match) + ""));
+    } else {
+      console.log("An unknown error occurred");
+    }
+  } else {
+    throw exn;
+  }
+}
 
 console.log("\n GADTs Usage");
 
@@ -139,4 +282,19 @@ console.log(LengthList$ReasonmlConcepts.pop(LengthList$ReasonmlConcepts.pop(Leng
                   ]
                 ], 3))));
 
+var me = {
+  age: 5,
+  name: "Big Reason"
+};
+
+exports.obj = obj;
+exports.obj2 = obj2;
+exports.getAge = getAge;
+exports.getObj = getObj;
+exports.me = me;
+exports.personObj = personObj;
+exports.myPerson = myPerson;
+exports.make = make;
+exports.MyException = MyException;
+exports.unsafeMethod = unsafeMethod;
 /*  Not a pure module */
